@@ -1,0 +1,4 @@
+# Use H2 in-memory database for tests
+spring.datasource.url: jdbc:h2:mem:byte-unbound
+
+spring.main.allow-bean-definition-overriding: true

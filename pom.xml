@@ -20,6 +20,8 @@
         <commons-collections4.version>4.4</commons-collections4.version>
         <telegrambots.version>8.0.0</telegrambots.version>
         <javax.mail.version>1.6.2</javax.mail.version>
+        <jsoup.version>1.16.1</jsoup.version>
+        <pdfbox.version>3.0.3</pdfbox.version>
     </properties>
     <dependencies>
         <dependency>
@@ -66,13 +68,13 @@
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.16.1</version> <!-- Use the latest version -->
+            <version>${jsoup.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.pdfbox</groupId>
             <artifactId>pdfbox</artifactId>
-            <version>3.0.3</version>
+            <version>${pdfbox.version}</version>
         </dependency>
 
 
