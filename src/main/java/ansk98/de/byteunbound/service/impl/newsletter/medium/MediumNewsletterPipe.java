@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.net.SocketException;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -62,6 +63,9 @@ public class MediumNewsletterPipe implements INewsletterPipe {
     private static Optional<Document> document(String link) {
         try {
             return Optional.of(Jsoup.connect(link).get());
+        } catch(SocketException e) {
+            LOGGER.error("Network error. Error: {}", e.getMessage());
+            throw new RuntimeException(e);
         } catch (IOException e) {
             LOGGER.error("Could not get document from link {}. Error: {}", link, e.getMessage());
             return Optional.empty();
