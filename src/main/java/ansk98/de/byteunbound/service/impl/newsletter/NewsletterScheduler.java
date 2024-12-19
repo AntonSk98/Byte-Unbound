@@ -1,7 +1,6 @@
 package ansk98.de.byteunbound.service.impl.newsletter;
 
 import ansk98.de.byteunbound.exception.GlobalExceptionWrapper;
-import ansk98.de.byteunbound.service.api.newsletter.INewsletterRegistryService;
 import ansk98.de.byteunbound.service.api.newsletter.INewsletterScheduler;
 import ansk98.de.byteunbound.service.api.newsletter.INewsletterService;
 import ansk98.de.byteunbound.service.parameter.newsletter.AbstractNewsletterContainer;

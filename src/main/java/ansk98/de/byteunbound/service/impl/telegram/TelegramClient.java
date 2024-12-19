@@ -1,7 +1,6 @@
 package ansk98.de.byteunbound.service.impl.telegram;
 
 import ansk98.de.byteunbound.properties.TelegramProperties;
-import ansk98.de.byteunbound.service.api.telegram.ICommandHandlerProvider;
 import ansk98.de.byteunbound.service.api.telegram.ITelegramClient;
 import ansk98.de.byteunbound.service.parameter.telegram.Newsletter;
 import ansk98.de.byteunbound.service.parameter.telegram.Post;

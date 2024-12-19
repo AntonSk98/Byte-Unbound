@@ -1,7 +1,6 @@
 package ansk98.de.byteunbound.service.impl.telegram.handler;
 
 import ansk98.de.byteunbound.service.api.telegram.IAttachmentHandler;
-import ansk98.de.byteunbound.service.api.telegram.ICommandHandler;
 import ansk98.de.byteunbound.service.api.telegram.ITelegramClient;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.pdfbox.Loader;

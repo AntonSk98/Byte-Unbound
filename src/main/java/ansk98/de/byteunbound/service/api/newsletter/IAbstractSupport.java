@@ -9,6 +9,7 @@ public interface IAbstractSupport {
 
     /**
      * Is newsletter service supported based on the passed source?
+     *
      * @param source source
      * @return true if service is supported
      */

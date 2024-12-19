@@ -10,7 +10,7 @@ import ansk98.de.byteunbound.service.parameter.telegram.Command;
 public interface IAbstractCommandSupport {
 
     /**
-     * Checks whetther a received command is supported based on the passed {@link Command}.
+     * Checks whether a received command is supported based on the passed {@link Command}.
      *
      * @param command command
      * @return true if supported
