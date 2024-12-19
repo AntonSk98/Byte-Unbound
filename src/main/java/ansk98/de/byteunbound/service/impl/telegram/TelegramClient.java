@@ -21,6 +21,9 @@ import java.io.InputStream;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -51,7 +54,7 @@ public class TelegramClient implements ITelegramClient {
     public void sendNewsletter(Newsletter newsletter) {
         String content = buildNewsletterMessage(newsletter);
 
-        SendMessage message = new SendMessage(telegramProperties.groupId(), content);
+        SendMessage message = new SendMessage(telegramProperties.channelId(), content);
         message.setParseMode("HTML");
         message.disableWebPagePreview();
         sendMessage(message);
@@ -66,41 +69,48 @@ public class TelegramClient implements ITelegramClient {
     }
 
     @Override
-    public void sendArticle(String title, List<InputStream> binariesStream) {
-        sendMessageToBot("Sending an article with " + binariesStream.size() + " images in it.");
-        var binaryBatches = ListUtils.partition(binariesStream, 10);
-        int pages = binaryBatches.size();
-        boolean singlePage = pages == 1;
-        AtomicInteger element = new AtomicInteger();
-        AtomicInteger page = new AtomicInteger(1);
+    public void sendArticleAsync(String title, List<InputStream> binariesStream) {
+        final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-        binaryBatches
-                .forEach(binaryBatch -> {
-                    List<InputMedia> mediaGroup = new ArrayList<>();
-                    binaryBatch.forEach(binary -> {
-                        InputMediaPhoto mediaPhoto = new InputMediaPhoto(binary, "article_" + page.get() + "_" + element.getAndIncrement());
-                        if (mediaGroup.isEmpty()) {
-                            final String pagePostfix = singlePage ? "" : "\n\n<i>Page " + page.get() + " out of " + pages + "</i>";
-                            final String caption = String.format("<b>#Article %s</b> %s", title, pagePostfix);
-                            mediaPhoto.setCaption(caption);
-                            mediaPhoto.setParseMode("HTML");
+        Runnable sendArticle = () -> {
+            sendMessageToBot("Sending an article with " + binariesStream.size() + " images in it.");
+            var binaryBatches = ListUtils.partition(binariesStream, 10);
+            int pages = binaryBatches.size();
+            boolean singlePage = pages == 1;
+            AtomicInteger element = new AtomicInteger();
+            AtomicInteger page = new AtomicInteger(1);
+
+            binaryBatches
+                    .forEach(binaryBatch -> {
+                        List<InputMedia> mediaGroup = new ArrayList<>();
+                        binaryBatch.forEach(binary -> {
+                            InputMediaPhoto mediaPhoto = new InputMediaPhoto(binary, "article_" + page.get() + "_" + element.getAndIncrement());
+                            if (mediaGroup.isEmpty()) {
+                                final String pagePostfix = singlePage ? "" : "\n\n<i>Page " + page.get() + " out of " + pages + "</i>";
+                                final String caption = String.format("<b>#Article %s</b> %s", title, pagePostfix);
+                                mediaPhoto.setCaption(caption);
+                                mediaPhoto.setParseMode("HTML");
+                            }
+                            mediaGroup.add(mediaPhoto);
+                        });
+
+                        SendMediaGroup sendMediaGroup = new SendMediaGroup(telegramProperties.channelId(), mediaGroup);
+                        sendMediaGroup(sendMediaGroup);
+
+                        if (!singlePage && page.get() != pages) {
+                            final Duration awaitDuration = Duration.ofSeconds(20);
+                            sendMessageToBot("Sent page " + page.get() + " out of " + pages + ". Waiting for " + awaitDuration.toSeconds() + " seconds...");
+                            await(awaitDuration);
                         }
-                        mediaGroup.add(mediaPhoto);
+
+                        page.getAndIncrement();
                     });
 
-                    SendMediaGroup sendMediaGroup = new SendMediaGroup(telegramProperties.groupId(), mediaGroup);
-                    sendMediaGroup(sendMediaGroup);
+            sendMessageToBot("The article was successfully published to the channel.");
+        };
 
-                    if (!singlePage && page.get() != pages) {
-                        final Duration awaitDuration = Duration.ofSeconds(20);
-                        sendMessageToBot("Sent page " + page.get() + " out of " + pages + " pages. Waiting for " + awaitDuration.toSeconds() + " seconds...");
-                        await(awaitDuration);
-                    }
+        CompletableFuture.runAsync(sendArticle, executorService).whenComplete((unused, throwable) -> executorService.shutdown());
 
-                    page.getAndIncrement();
-                });
-
-        sendMessageToBot("Successfully sent the article to the group!");
     }
 
     private static void await(Duration duration) {

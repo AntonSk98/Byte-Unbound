@@ -14,8 +14,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.SocketException;
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,20 +47,11 @@ public class MediumNewsletterPipe implements INewsletterPipe {
     }
 
     private Optional<Post> toPost(String articleLink) {
-        await();
         return document(articleLink)
                 .map(document -> document.selectFirst("h1"))
                 .map(Element::text)
                 .map(title -> new Post(title, articleLink));
 
-    }
-
-    private static void await() {
-        try {
-            Thread.sleep(Duration.of(500, ChronoUnit.MILLIS));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private static Optional<Document> document(String link) {

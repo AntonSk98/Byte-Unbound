@@ -27,12 +27,12 @@ public interface ITelegramClient {
     void sendMessageToBot(String message);
 
     /**
-     * Sends an article split in images.
+     * Sends an article split in images in an asynchronous way.
      *
      * @param title          article title
      * @param binariesStream binary images
      */
-    void sendArticle(String title, List<InputStream> binariesStream);
+    void sendArticleAsync(String title, List<InputStream> binariesStream);
 
     /**
      * Streams the file from Telegram Server by its file identifier.

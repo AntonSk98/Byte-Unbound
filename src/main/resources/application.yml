@@ -4,7 +4,7 @@ client:
   telegram:
     token: ${TELEGRAM.TOKEN}
     bot-id: ${TELEGRAM.BOT-ID}
-    group-id: ${TELEGRAM.GROUP-ID}
+    channel-id: ${TELEGRAM.CHANNEL-ID}
 
 email:
   host: imap.gmx.com

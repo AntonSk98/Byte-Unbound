@@ -38,7 +38,7 @@ public class PdfDocumentHandler implements IAttachmentHandler {
         telegramClient.sendMessageToBot("Processing the attachment...");
         try (InputStream binaryPdf = telegramClient.streamFile(document.getFileId())) {
             List<InputStream> binaryImages = convertPdfToImages(binaryPdf);
-            telegramClient.sendArticle(StringUtils.substringBefore(document.getFileName(), "."), binaryImages);
+            telegramClient.sendArticleAsync(StringUtils.substringBefore(document.getFileName(), "."), binaryImages);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -29,7 +29,7 @@ public class NewsletterScheduler implements INewsletterScheduler {
     }
 
     @Override
-    @Scheduled(fixedDelay = 5, timeUnit = TimeUnit.SECONDS)
+    @Scheduled(fixedDelay = 5, timeUnit = TimeUnit.MINUTES)
     public void sendPublishedNewsletters() {
         GlobalExceptionWrapper.wrap(eventPublisher, () -> {
             List<AbstractNewsletterContainer> newsletters = newsletterService.findPublishedNewsletters();

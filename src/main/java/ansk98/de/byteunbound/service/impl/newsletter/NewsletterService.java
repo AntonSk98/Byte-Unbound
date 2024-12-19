@@ -60,6 +60,7 @@ public class NewsletterService implements INewsletterService {
                     );
 
             if (abstractNewsletter.isEmpty()) {
+                telegramClient.sendMessageToBot(String.format("No published '%s' newsletters are found", newsletterConsumer.getSource().getSimpleName()));
                 continue;
             }
 
@@ -69,6 +70,8 @@ public class NewsletterService implements INewsletterService {
                             abstractNewsletter
                     )
             );
+
+            telegramClient.sendMessageToBot(String.format("Found a published '%s' newsletter.", newsletterConsumer.getSource().getSimpleName()));
         }
 
         return abstractNewsletters;
