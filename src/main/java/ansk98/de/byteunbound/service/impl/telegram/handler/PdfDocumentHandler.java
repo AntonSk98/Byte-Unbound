@@ -1,6 +1,7 @@
 package ansk98.de.byteunbound.service.impl.telegram.handler;
 
 import ansk98.de.byteunbound.service.api.telegram.IAttachmentHandler;
+import ansk98.de.byteunbound.service.api.telegram.ICommandHandler;
 import ansk98.de.byteunbound.service.api.telegram.ITelegramClient;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.pdfbox.Loader;
@@ -19,6 +20,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of {@link IAttachmentHandler}.
+ *
+ * @author Anton SKripin (anton.tech98@gmail.com)
+ */
 @Component
 public class PdfDocumentHandler implements IAttachmentHandler {
 

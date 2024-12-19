@@ -17,6 +17,11 @@ import org.telegram.telegrambots.meta.api.objects.message.Message;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation of {@link ITelegramConsumer}.
+ *
+ * @author Anton SKripin (anton.tech98@gmail.com)
+ */
 @Service
 public class TelegramConsumer implements ITelegramConsumer {
 

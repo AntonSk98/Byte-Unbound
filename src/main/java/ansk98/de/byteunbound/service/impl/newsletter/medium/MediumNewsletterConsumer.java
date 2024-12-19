@@ -11,6 +11,11 @@ import org.springframework.stereotype.Service;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+/**
+ * Implementation of {@link INewsletterConsumer}.
+ *
+ * @author Anton SKripin (anton.tech98@gmail.com)
+ */
 @Service
 public class MediumNewsletterConsumer implements INewsletterConsumer {
 

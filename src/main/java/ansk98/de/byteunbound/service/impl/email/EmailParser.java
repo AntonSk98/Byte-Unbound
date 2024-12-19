@@ -14,6 +14,11 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.regex.Pattern;
 
+/**
+ * Implementation of {@link IEmailParser}.
+ *
+ * @author Anton Skripin (anton.tech98@gmail.com)
+ */
 @Component
 public class EmailParser implements IEmailParser {
 
@@ -37,7 +42,6 @@ public class EmailParser implements IEmailParser {
                 .toList();
     }
 
-    // Helper method to extract text from a Message
     private static String extractAllTextFrom(Message message) {
         try {
             if (message.isMimeType("text/plain")) {

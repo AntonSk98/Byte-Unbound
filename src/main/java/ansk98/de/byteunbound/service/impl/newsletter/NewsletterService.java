@@ -18,6 +18,11 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of {@link INewsletterService}.
+ *
+ * @author Anton SKripin (anton.tech98@gmail.com)
+ */
 @Service
 public class NewsletterService implements INewsletterService {
 

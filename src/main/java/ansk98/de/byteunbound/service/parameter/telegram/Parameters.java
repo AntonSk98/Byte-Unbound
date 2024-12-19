@@ -7,6 +7,11 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Optional;
 
+/**
+ * Parameters of a received {@link Command}.
+ *
+ * @author Anton Skripin (anton.tech98@gmail.com)
+ */
 public class Parameters {
     private static final String paramStart = "(";
     private static final String paramEnd = ")";
@@ -34,6 +39,11 @@ public class Parameters {
                 .iterator();
     }
 
+    /**
+     * Returns the next parameter or empty optional.
+     *
+     * @return optional of the next parameter
+     */
     public Optional<String> getNextParameter() {
         if (parametersIterator.hasNext()) {
             return Optional.ofNullable(parametersIterator.next());

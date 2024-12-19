@@ -7,6 +7,11 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.longpolling.TelegramBotsLongPollingApplication;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+/**
+ * Component that starts up Telegram Bot.
+ *
+ * @author Anton Skripin (anton.tech98@gmail.com)
+ */
 @Component
 public class TelegramInitializer {
 

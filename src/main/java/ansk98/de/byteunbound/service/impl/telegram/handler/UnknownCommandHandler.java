@@ -2,10 +2,15 @@ package ansk98.de.byteunbound.service.impl.telegram.handler;
 
 import ansk98.de.byteunbound.service.api.telegram.ICommandHandler;
 import ansk98.de.byteunbound.service.api.telegram.ITelegramClient;
-import ansk98.de.byteunbound.service.parameter.telegram.Commands;
+import ansk98.de.byteunbound.service.parameter.telegram.Command;
 import ansk98.de.byteunbound.service.parameter.telegram.Parameters;
 import org.springframework.stereotype.Component;
 
+/**
+ * Implementation of {@link ICommandHandler}.
+ *
+ * @author Anton SKripin (anton.tech98@gmail.com)
+ */
 @Component
 public class UnknownCommandHandler implements ICommandHandler {
 
@@ -21,7 +26,7 @@ public class UnknownCommandHandler implements ICommandHandler {
     }
 
     @Override
-    public boolean supports(Commands command) {
-        return Commands.UNKNOWN.equals(command);
+    public boolean supports(Command command) {
+        return Command.UNKNOWN.equals(command);
     }
 }

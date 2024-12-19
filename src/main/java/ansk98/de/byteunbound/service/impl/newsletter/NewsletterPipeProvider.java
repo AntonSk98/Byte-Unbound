@@ -2,10 +2,16 @@ package ansk98.de.byteunbound.service.impl.newsletter;
 
 import ansk98.de.byteunbound.service.api.newsletter.INewsletterPipe;
 import ansk98.de.byteunbound.service.api.newsletter.INewsletterPipeProvider;
+import ansk98.de.byteunbound.service.api.newsletter.ISelfNewsletterService;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * Implementation of {@link INewsletterPipeProvider}.
+ *
+ * @author Anton SKripin (anton.tech98@gmail.com)
+ */
 @Component
 public class NewsletterPipeProvider implements INewsletterPipeProvider {
 

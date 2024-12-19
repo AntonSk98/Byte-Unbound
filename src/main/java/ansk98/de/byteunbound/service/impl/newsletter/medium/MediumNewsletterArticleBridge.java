@@ -4,6 +4,11 @@ import ansk98.de.byteunbound.properties.MediumNewsletterProperties;
 import ansk98.de.byteunbound.service.api.newsletter.INewsletterArticleBridge;
 import org.springframework.stereotype.Service;
 
+/**
+ * Implementation of {@link INewsletterArticleBridge}.
+ *
+ * @author Anton SKripin (anton.tech98@gmail.com)
+ */
 @Service
 public class MediumNewsletterArticleBridge implements INewsletterArticleBridge {
 

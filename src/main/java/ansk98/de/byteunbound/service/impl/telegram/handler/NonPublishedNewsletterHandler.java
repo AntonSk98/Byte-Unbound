@@ -4,13 +4,18 @@ import ansk98.de.byteunbound.domain.Article;
 import ansk98.de.byteunbound.service.api.newsletter.ISelfNewsletterService;
 import ansk98.de.byteunbound.service.api.telegram.ICommandHandler;
 import ansk98.de.byteunbound.service.api.telegram.ITelegramClient;
-import ansk98.de.byteunbound.service.parameter.telegram.Commands;
+import ansk98.de.byteunbound.service.parameter.telegram.Command;
 import ansk98.de.byteunbound.service.parameter.telegram.Parameters;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of {@link ICommandHandler}.
+ *
+ * @author Anton SKripin (anton.tech98@gmail.com)
+ */
 @Component
 public class NonPublishedNewsletterHandler implements ICommandHandler {
 
@@ -41,7 +46,7 @@ public class NonPublishedNewsletterHandler implements ICommandHandler {
     }
 
     @Override
-    public boolean supports(Commands command) {
-        return Commands.NON_PUBLISHED_NEWSLETTER.equals(command);
+    public boolean supports(Command command) {
+        return Command.NON_PUBLISHED_NEWSLETTER.equals(command);
     }
 }

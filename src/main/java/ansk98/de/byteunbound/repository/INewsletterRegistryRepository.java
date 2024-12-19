@@ -6,7 +6,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Repository to manage {@link NewsletterRegistry}.
+ *
+ * @author Anton Skripin (anton.tech98@gmail.com)
+ */
 public interface INewsletterRegistryRepository extends JpaRepository<NewsletterRegistry, UUID> {
 
-    Optional<NewsletterRegistry> findNewsletterRegistriesBySource(String simpleName);
+    /**
+     * Finds a {@link NewsletterRegistry} based on the passed source.
+     *
+     * @param source source
+     * @return state of the newsletter consumer
+     */
+    Optional<NewsletterRegistry> findNewsletterRegistriesBySource(String source);
 }

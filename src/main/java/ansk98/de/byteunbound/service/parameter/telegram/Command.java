@@ -4,7 +4,12 @@ import org.apache.logging.log4j.util.Strings;
 
 import java.util.Arrays;
 
-public enum Commands {
+/**
+ * Enum that contains all ready-to-be-handled commands.
+ *
+ * @author Anton Skripin (anton.tech98@gmail.com)
+ */
+public enum Command {
 
     NEW_ARTICLE("/new-article"),
     NON_PUBLISHED_NEWSLETTER("/non-published-newsletter"),
@@ -13,7 +18,7 @@ public enum Commands {
 
     private final String command;
 
-    Commands(String command) {
+    Command(String command) {
         this.command = command;
     }
 
@@ -21,8 +26,14 @@ public enum Commands {
         return command;
     }
 
-    public static Commands find(String maybeCommand) {
-        return Arrays.stream(Commands.values())
+    /**
+     * Resolves a {@link Command} from the client's message
+     *
+     * @param maybeCommand client text that might be a command or may result in {@link #UNKNOWN} command
+     * @return command
+     */
+    public static Command find(String maybeCommand) {
+        return Arrays.stream(Command.values())
                 .filter(command -> maybeCommand.startsWith(command.getCommand()))
                 .findFirst()
                 .orElse(UNKNOWN);

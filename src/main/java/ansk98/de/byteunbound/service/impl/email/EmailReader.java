@@ -13,6 +13,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * Implementation of {@link IEmailReader}.
+ *
+ * @author Anton Skripin (anton.tech98@gmail.com)
+ */
 @Component
 public class EmailReader implements IEmailReader {
 

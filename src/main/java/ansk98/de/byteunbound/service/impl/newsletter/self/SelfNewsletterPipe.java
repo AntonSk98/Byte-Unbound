@@ -7,6 +7,11 @@ import ansk98.de.byteunbound.service.parameter.telegram.Newsletter;
 import ansk98.de.byteunbound.service.parameter.telegram.Post;
 import org.springframework.stereotype.Component;
 
+/**
+ * Implementation of {@link INewsletterPipe}.
+ *
+ * @author Anton SKripin (anton.tech98@gmail.com)
+ */
 @Component
 public class SelfNewsletterPipe implements INewsletterPipe {
 

@@ -7,6 +7,11 @@ import jakarta.persistence.Id;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
+/**
+ * Entity that contains a self-added article metadata in the database.
+ *
+ * @author Anton Skripin (anton.tech98@gmail.com)
+ */
 @Entity
 public class Article {
 

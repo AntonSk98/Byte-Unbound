@@ -2,6 +2,7 @@ package ansk98.de.byteunbound.service.impl.newsletter.self;
 
 import ansk98.de.byteunbound.domain.Article;
 import ansk98.de.byteunbound.repository.IArticleRepository;
+import ansk98.de.byteunbound.service.api.newsletter.INewsletterPipe;
 import ansk98.de.byteunbound.service.api.newsletter.ISelfNewsletterService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+/**
+ * Implementation of {@link ISelfNewsletterService}.
+ *
+ * @author Anton SKripin (anton.tech98@gmail.com)
+ */
 @Service
 public class SelfNewsletterService implements ISelfNewsletterService {
 

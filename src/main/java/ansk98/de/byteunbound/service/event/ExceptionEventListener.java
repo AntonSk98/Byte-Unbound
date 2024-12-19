@@ -4,6 +4,11 @@ import ansk98.de.byteunbound.service.api.telegram.ITelegramClient;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+/**
+ * Event listener that handler emitted exceptions.
+ *
+ * @author Anton Skripin (anton.tech98@gmail.com)
+ */
 @Component
 class ExceptionEventListener {
 
@@ -13,8 +18,13 @@ class ExceptionEventListener {
         this.telegramClient = telegramClient;
     }
 
+    /**
+     * Listener on exception.
+     *
+     * @param exceptionEvent exception event
+     */
     @EventListener
     void onEvent(NotifiableExceptionEvent exceptionEvent) {
-        telegramClient.sendMessageToBot("Unexpected error occurred... Error: " + exceptionEvent.getExceptionMessage());
+        telegramClient.sendMessageToBot("The following error occurred: " + exceptionEvent.getExceptionMessage());
     }
 }

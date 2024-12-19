@@ -8,6 +8,11 @@ import java.time.ZonedDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Entity that saves the state of each newsletter publisher registry that is responsible for sending out newsletter to the group.
+ *
+ * @author Anton Skripin (anton.tech98@gmail.com)
+ */
 @Entity
 public class NewsletterRegistry {
 

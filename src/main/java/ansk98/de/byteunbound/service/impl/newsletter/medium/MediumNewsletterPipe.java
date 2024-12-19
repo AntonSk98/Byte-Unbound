@@ -19,6 +19,11 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation of {@link INewsletterPipe}.
+ *
+ * @author Anton SKripin (anton.tech98@gmail.com)
+ */
 @Component
 public class MediumNewsletterPipe implements INewsletterPipe {
 
@@ -28,7 +33,7 @@ public class MediumNewsletterPipe implements INewsletterPipe {
     public Newsletter transform(IAbstractNewsletter newsletter) {
         MediumMailNewsletter mediumMailNewsletter = newsletter.map(MediumMailNewsletter.class);
 
-        List<Post> posts = mediumMailNewsletter.newsletterLinks()
+        List<Post> posts = mediumMailNewsletter.articleLinks()
                 .stream()
                 .map(this::toPost)
                 .filter(Optional::isPresent)
@@ -63,7 +68,7 @@ public class MediumNewsletterPipe implements INewsletterPipe {
     private static Optional<Document> document(String link) {
         try {
             return Optional.of(Jsoup.connect(link).get());
-        } catch(SocketException e) {
+        } catch (SocketException e) {
             LOGGER.error("Network error. Error: {}", e.getMessage());
             throw new RuntimeException(e);
         } catch (IOException e) {
