@@ -11,9 +11,9 @@ import java.util.Arrays;
  */
 public enum Command {
 
-    NEW_ARTICLE("/new-article"),
-    NON_PUBLISHED_NEWSLETTER("/non-published-newsletter"),
-    PUBLISH_NEWSLETTER("/publish-newsletter"),
+    NEW_ARTICLE("/new_article"),
+    NON_PUBLISHED_NEWSLETTER("/non_published_newsletter"),
+    PUBLISH_NEWSLETTER("/publish_newsletter"),
     UNKNOWN(Strings.EMPTY);
 
     private final String command;
