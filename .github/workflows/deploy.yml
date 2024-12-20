@@ -69,7 +69,7 @@ jobs:
           docker rm byte-unbound || true
           
           # Pull the latest image
-          docker load -i $IMAGE_PATH
+          docker load -i $IMAGE_PATH/byte-unbound.tar
           
           # Start the new container
           docker run -d --name byte_unbound_bot \
