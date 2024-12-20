@@ -22,17 +22,14 @@ jobs:
       - name: Build Application with Maven
         run: mvn clean package
 
-      # Build Docker image
       - name: Build Docker Image
         run: |
           docker build -t byte-unbound .
 
-      # Save Docker image to a tarball file
       - name: Save Docker Image as Tarball
         run: |
           docker save -o byte-unbound.tar byte-unbound
 
-      # Copy Docker image tarball to remote Oracle machine
       - name: Copy Docker Image to Remote Server
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
@@ -45,7 +42,6 @@ jobs:
           ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "mkdir -p $IMAGE_PATH"
           scp -o StrictHostKeyChecking=no byte-unbound.tar $SSH_USER@$SSH_HOST:$IMAGE_PATH
 
-      # SSH into the remote server and deploy the application
       - name: Deploy to Remote Server
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
