@@ -1,4 +1,4 @@
-spring.application.name: byte-unbound
+spring.application.name: byte_unbound_bot
 
 client:
   telegram:
@@ -23,8 +23,8 @@ newsletter:
 spring:
   datasource:
     url: jdbc:h2:file:${DATABASE.PATH}
-    username: h2
-    password: password
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update

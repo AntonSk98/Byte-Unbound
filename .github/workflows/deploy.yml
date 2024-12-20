@@ -1,0 +1,87 @@
+name: Deploy Spring Boot Application
+
+on:
+  push:
+    branches:
+      - release
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Build Application with Maven
+        run: mvn clean package
+
+      # Build Docker image
+      - name: Build Docker Image
+        run: |
+          docker build -t byte-unbound .
+
+      # Save Docker image to a tarball file
+      - name: Save Docker Image as Tarball
+        run: |
+          docker save -o byte-unbound.tar byte-unbound
+
+      # Copy Docker image tarball to remote Oracle machine
+      - name: Copy Docker Image to Remote Server
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          IMAGE_PATH: ${{ secrets.IMAGE_PATH }}
+        run: |
+          eval $(ssh-agent -s)
+          ssh-add - <<< "$SSH_KEY"
+          ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST "mkdir -p $IMAGE_PATH"
+          scp -o StrictHostKeyChecking=no byte-unbound.tar $SSH_USER@$SSH_HOST:$IMAGE_PATH
+
+      # SSH into the remote server and deploy the application
+      - name: Deploy to Remote Server
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          IMAGE_PATH: ${{ secrets.IMAGE_PATH }}
+          DATABASE_PATH: ${{ secrets.DATABASE_PATH }}
+          DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          TELEGRAM_BOT_ID: ${{ secrets.TELEGRAM_BOT_ID }}
+          TELEGRAM_CHANNEL_ID: ${{ secrets.TELEGRAM_CHANNEL_ID }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        run: |
+          eval $(ssh-agent -s)
+          ssh-add - <<< "$SSH_KEY"
+          ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST << EOF
+          # Stop the existing container
+          docker stop byte-unbound || true
+          docker rm byte-unbound || true
+          
+          # Pull the latest image
+          docker load -i $IMAGE_PATH
+          
+          # Start the new container
+          docker run -d --name byte_unbound_bot \
+            -e DATABASE.PATH=$DATABASE_PATH \
+            -e DATABASE.USERNAME=$DATABASE_USERNAME \
+            -e DATABASE.PASSWORD=$DATABASE_PASSWORD \
+            -e EMAIL-PASSWORD=$EMAIL_PASSWORD \
+            -e EMAIL-USERNAME=$EMAIL_USERNAME \
+            -e TELEGRAM.BOT-ID=$TELEGRAM_BOT_ID \
+            -e TELEGRAM.CHANNEL-ID=$TELEGRAM_CHANNEL_ID \
+            -e TELEGRAM.TOKEN=$TELEGRAM_TOKEN \
+            byte-unbound
+          
+          docker system prune -f
+          EOF
