@@ -10,7 +10,7 @@
     </parent>
     <groupId>ansk98.de</groupId>
     <artifactId>byte-unbound</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>byte-unbound</name>
     <description>byte-unbound</description>
 
