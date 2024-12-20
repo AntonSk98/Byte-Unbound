@@ -68,7 +68,7 @@ jobs:
           docker load -i $IMAGE_PATH/byte-unbound.tar
           
           # Start the new container
-          docker run -d --name byte_unbound_bot \
+          docker run -d --network host --name byte_unbound_bot \
             -e DATABASE.PATH=$DATABASE_PATH \
             -e DATABASE.USERNAME=$DATABASE_USERNAME \
             -e DATABASE.PASSWORD=$DATABASE_PASSWORD \
