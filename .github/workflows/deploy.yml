@@ -61,8 +61,8 @@ jobs:
           ssh-add - <<< "$SSH_KEY"
           ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST << EOF
           # Stop the existing container
-          docker stop byte-unbound || true
-          docker rm byte-unbound || true
+          docker stop byte_unbound_bot || true
+          docker rm byte_unbound_bot || true
           
           # Pull the latest image
           docker load -i $IMAGE_PATH/byte-unbound.tar
