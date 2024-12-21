@@ -49,7 +49,7 @@ jobs:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           IMAGE_PATH: ${{ secrets.IMAGE_PATH }}
           DATABASE_PATH: ${{ secrets.IMAGE_PATH }}/data/db
-          DOCKER_DATABASE_PATH: /app/data
+          DOCKER_DATABASE_PATH: /app/data/db
           DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
           EMAIL_USERNAME: ${{ secrets.EMAIL_USERNAME }}
