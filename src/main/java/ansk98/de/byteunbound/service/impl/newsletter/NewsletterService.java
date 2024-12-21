@@ -53,25 +53,26 @@ public class NewsletterService implements INewsletterService {
             ZonedDateTime searchDateTime = ZonedDateTime.now();
             NewsletterRegistry newsletterRegistry = newsletterRegistryService.getOrCreateRegistry(newsletterConsumer.getSource());
 
-            IAbstractNewsletter abstractNewsletter = newsletterConsumer
+            List<? extends IAbstractNewsletter> abstractNewsletter = newsletterConsumer
                     .consumeSince(newsletterRegistry
                             .getLastScannedAt()
                             .orElse(ZonedDateTime.from(Instant.EPOCH.atZone(ZoneId.systemDefault())))
                     );
 
-            if (abstractNewsletter.isEmpty()) {
-                telegramClient.sendMessageToBot(String.format("No published '%s' newsletters are found", newsletterConsumer.getSource().getSimpleName()));
+            if (abstractNewsletter.isEmpty() || abstractNewsletter.stream().allMatch(IAbstractNewsletter::isEmpty)) {
+                telegramClient.sendMessageToBot(String.format("No new '%s' newsletters are found", newsletterConsumer.getSource().getSimpleName()));
                 continue;
             }
 
-            abstractNewsletters.add(
-                    new AbstractNewsletterContainer(
+            abstractNewsletter
+                    .stream()
+                    .map(newsletter -> new AbstractNewsletterContainer(
                             new AbstractNewsletterContainer.NewsletterMetadata(newsletterConsumer.getSource(), searchDateTime),
-                            abstractNewsletter
-                    )
-            );
+                            newsletter
+                    ))
+                    .forEach(abstractNewsletters::add);
 
-            telegramClient.sendMessageToBot(String.format("Found a published '%s' newsletter.", newsletterConsumer.getSource().getSimpleName()));
+            telegramClient.sendMessageToBot(String.format("Found some new '%s' newsletters.", newsletterConsumer.getSource().getSimpleName()));
         }
 
         return abstractNewsletters;

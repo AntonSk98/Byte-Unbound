@@ -3,6 +3,7 @@ package ansk98.de.byteunbound.service.api.newsletter;
 import ansk98.de.byteunbound.service.parameter.newsletter.IAbstractNewsletter;
 
 import java.time.ZonedDateTime;
+import java.util.List;
 
 /**
  * Abstract newsletter consumer that finds articles after the specified time.
@@ -17,7 +18,7 @@ public interface INewsletterConsumer {
      * @param dateTime timestamp
      * @return {@link IAbstractNewsletter}
      */
-    IAbstractNewsletter consumeSince(ZonedDateTime dateTime);
+    List<? extends IAbstractNewsletter> consumeSince(ZonedDateTime dateTime);
 
     /**
      * Returns the source of the newsletter consumer

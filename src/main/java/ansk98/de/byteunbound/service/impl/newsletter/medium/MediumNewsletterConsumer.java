@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Implementation of {@link INewsletterConsumer}.
@@ -32,15 +33,14 @@ public class MediumNewsletterConsumer implements INewsletterConsumer {
     }
 
     @Override
-    public MediumMailNewsletter consumeSince(ZonedDateTime dateTime) {
+    public List<MediumMailNewsletter> consumeSince(ZonedDateTime dateTime) {
         List<Message> messages = emailReader.findEmailsReceivedAfter(dateTime);
-        List<String> articleLinks = messages
+        return messages
                 .stream()
-                .flatMap(message -> emailParser.extractLinks(message).stream())
-                .map(newsletterArticleBridge::bridge)
+                .map(message -> emailParser.extractLinks(message).stream().map(newsletterArticleBridge::bridge))
+                .map(Stream::toList)
+                .map(MediumMailNewsletter::new)
                 .toList();
-
-        return new MediumMailNewsletter(articleLinks);
     }
 
     @Override
