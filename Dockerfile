@@ -8,5 +8,7 @@ WORKDIR /app
 # Assuming the JAR file is built and located in the target directory (for Maven)
 COPY target/byte-unbound-*.jar byte-unbound.jar
 
+VOLUME /app/data
+
 # Command to run your Spring Boot JAR file
 ENTRYPOINT ["java", "-jar", "/app/byte-unbound.jar"]
