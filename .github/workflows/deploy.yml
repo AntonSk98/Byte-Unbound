@@ -48,7 +48,7 @@ jobs:
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
           IMAGE_PATH: ${{ secrets.IMAGE_PATH }}
-          DATABASE_PATH: ${{ secrets.DATABASE_PATH }}
+          DATABASE_PATH: ${{ secrets.IMAGE_PATH }}/data/db
           DOCKER_DATABASE_PATH: /app/data
           DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
           DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
@@ -70,7 +70,7 @@ jobs:
           
           # Start the new container
           docker run -d --network host --name byte_unbound_bot \
-            -v $DATABASE_PATH:$DOCKER_DATABASE_PATH \
+            -v $IMAGE_PATH/data:$DOCKER_DATABASE_PATH \
             -e DATABASE.PATH=$DOCKER_DATABASE_PATH \
             -e DATABASE.USERNAME=$DATABASE_USERNAME \
             -e DATABASE.PASSWORD=$DATABASE_PASSWORD \
