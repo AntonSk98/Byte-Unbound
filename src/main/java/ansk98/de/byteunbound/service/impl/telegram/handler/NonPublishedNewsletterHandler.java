@@ -6,6 +6,7 @@ import ansk98.de.byteunbound.service.api.telegram.ICommandHandler;
 import ansk98.de.byteunbound.service.api.telegram.ITelegramClient;
 import ansk98.de.byteunbound.service.parameter.telegram.Command;
 import ansk98.de.byteunbound.service.parameter.telegram.Parameters;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -31,6 +32,11 @@ public class NonPublishedNewsletterHandler implements ICommandHandler {
     @Override
     public void apply(Parameters parameters) {
         List<Article> nonPublishedArticles = newsletterService.getNewsletter();
+
+        if (CollectionUtils.isEmpty(nonPublishedArticles)) {
+            telegramClient.sendMessageToBot("Currently there are no new articles... Add new ones!");
+            return;
+        }
 
         String message = new StringBuilder("<b>Non-published newsletter: </b>")
                 .append("\n\n")

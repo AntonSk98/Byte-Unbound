@@ -60,7 +60,7 @@ public class NewsletterService implements INewsletterService {
                     );
 
             if (abstractNewsletter.isEmpty() || abstractNewsletter.stream().allMatch(IAbstractNewsletter::isEmpty)) {
-                telegramClient.sendMessageToBot(String.format("No new '%s' newsletters are found", newsletterConsumer.getSource().getSimpleName()));
+                LOGGER.debug("No new {} newsletters are found", newsletterConsumer.getSource().getSimpleName());
                 continue;
             }
 

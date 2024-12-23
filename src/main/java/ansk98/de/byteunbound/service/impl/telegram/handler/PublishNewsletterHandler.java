@@ -5,6 +5,7 @@ import ansk98.de.byteunbound.service.api.telegram.ICommandHandler;
 import ansk98.de.byteunbound.service.api.telegram.ITelegramClient;
 import ansk98.de.byteunbound.service.parameter.telegram.Command;
 import ansk98.de.byteunbound.service.parameter.telegram.Parameters;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -26,6 +27,10 @@ public class PublishNewsletterHandler implements ICommandHandler {
 
     @Override
     public void apply(Parameters parameters) {
+        if (CollectionUtils.isEmpty(newsletterService.getNewsletter())) {
+            telegramClient.sendMessageToBot("There is no newsletter to be published...");
+            return;
+        }
         newsletterService.markAsPublishedNewsletter();
         telegramClient.sendMessageToBot("Newsletter is marked as published and soon it is gonna be posted!");
     }
